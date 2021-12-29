@@ -10,7 +10,9 @@ with DAG('user_processing',
 	schedule_interval="@daily", 
 	default_args=default_args,
 	catchup=False) as dag:
-
+	
+	# You can test this by running:
+	# airflow tasks test user_processing creating_table 2021-12-28
 	creating_table = SqliteOperator(
 		task_id='creating_table',
 		sqlite_conn_id='db_sqlite',
