@@ -2,7 +2,10 @@ from airflow.models import DAG
 # To get available ops, run: airflow providers list
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 from airflow.providers.http.sensors.http import HttpSensor
+from airflow.providers.http.operators.http import SimpleHttpOperator
 from datetime import datetime
+
+import json
 
 default_args = {
 	'start_date': datetime(2021, 12, 28)
@@ -36,4 +39,13 @@ with DAG('user_processing',
 		task_id='is_api_available',
 		http_conn_id='user_api',  # defined in admin->connections
 		endpoint='api/'
+	)
+
+	extracting_user = SimpleHttpOperator(
+		task_id='extracting_user',
+		http_conn_id='user_api',
+		endpoint='api/',
+		method='GET',
+		response_filter=lambda response: json.loads(response.text),
+		log_response=True
 	)
