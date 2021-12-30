@@ -81,3 +81,5 @@ with DAG('user_processing',
 		task_id='storing_user',
 		bash_command='echo -e ".separator ","\n.import /tmp/processed_user.csv users" | sqlite3 /opt/airflow/airflow.db'
 	)
+
+	creating_table >> is_api_available >> extracting_user >> processing_user >> storing_user
