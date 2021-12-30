@@ -12,7 +12,7 @@ import json
 from pandas import json_normalize
 
 default_args = {
-	'start_date': datetime(2021, 12, 28)
+	'start_date': datetime(2021, 12, 20)
 }
 
 def _processing_user(ti):
@@ -36,7 +36,7 @@ def _processing_user(ti):
 with DAG('user_processing', 
 	schedule_interval="@daily", 
 	default_args=default_args,
-	catchup=False) as dag:
+	catchup=True) as dag:
 	
 	# You can test this by running:
 	# airflow tasks test user_processing creating_table 2021-12-28
