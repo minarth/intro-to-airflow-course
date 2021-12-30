@@ -44,7 +44,7 @@ with DAG('user_processing',
 		task_id='creating_table',
 		sqlite_conn_id='db_sqlite',   # defined in admin->connections
 		sql='''
-			CREATE TABLE users (
+			CREATE TABLE IF NOT EXISTS users (
 				firstname TEXT NOT NULL, 
 				lastname TEXT NOT NULL, 
 				country TEXT NOT NULL, 
